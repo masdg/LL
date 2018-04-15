@@ -26,7 +26,7 @@ public class BinaryTree {
             firstName = fName;
             id = ident;
             right = null;
-            left = null
+            left = null;
 
         } // - public Node() {}
 
