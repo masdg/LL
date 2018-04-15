@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
 
-public class LinkedList extends Application {
+public class LinkedList {
 
     public static int lineNumber=0;
     private static final String FILE = "./classlist.txt";
@@ -45,7 +45,7 @@ public class LinkedList extends Application {
 
         public List(){
 
-        } // - pubic List(){}
+        } // - public List(){}
 
         public ListElement Find(String name){
 
@@ -168,8 +168,6 @@ public class LinkedList extends Application {
 
     } // - public class List
 
-    public ListElement pubList;
-
     public static void main(String bong[]){
 
         List header = new List();
@@ -226,33 +224,31 @@ public class LinkedList extends Application {
 
         ListElement ins = new ListElement("a","b","c");
 //        header.RealInsert(ins, 44);
-        pubList.next = header.nextd;
-
-        Application.launch(bong);
+//        Application.launch(bong);
 
     } // - public static void main(String bong[]){
 
-    @Override
-    public void start(Stage primaryStage) {
+    // @Override
+    // public void start(Stage primaryStage) {
 
-        ScrollPane scrollable = new ScrollPane();
-        GridPane grid = new GridPane();
-        grid.getColumnConstraints().add(new ColumnConstraints(100));
-        grid.getColumnConstraints().add(new ColumnConstraints(100));
-        grid.getColumnConstraints().add(new ColumnConstraints(100));
-        grid.setVgap(5);
-        grid.setHgap(5);
+    //     ScrollPane scrollable = new ScrollPane();
+    //     GridPane grid = new GridPane();
+    //     grid.getColumnConstraints().add(new ColumnConstraints(100));
+    //     grid.getColumnConstraints().add(new ColumnConstraints(100));
+    //     grid.getColumnConstraints().add(new ColumnConstraints(100));
+    //     grid.setVgap(5);
+    //     grid.setHgap(5);
 
-        scrollable.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-        scrollable.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+    //     scrollable.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+    //     scrollable.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
 
-        scrollable.setContent(grid);
-        Scene scene = new Scene(scrollable, 1000, 600);
-        primaryStage.setTitle("Student Data"); 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    //     scrollable.setContent(grid);
+    //     Scene scene = new Scene(scrollable, 1000, 600);
+    //     primaryStage.setTitle("Student Data"); 
+    //     primaryStage.setScene(scene);
+    //     primaryStage.show();
 
-    } // - public void start(Stage primaryStage) {
+    // } // - public void start(Stage primaryStage) {
 
 } // - public class LinkedList {}
 
@@ -289,4 +285,5 @@ couldn't be bothered rewriting it all out. this is the original.
                 ex.printStackTrace();
             }
         }
+
 */
