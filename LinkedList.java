@@ -223,32 +223,13 @@ public class LinkedList {
         }// - finally
 
         ListElement ins = new ListElement("a","b","c");
-//        header.RealInsert(ins, 44);
+        header.Insert(ins);
+        System.out.println(header.Find("Wong").firstName);
+        header.Delete("Suri");
 //        Application.launch(bong);
+        header.PrintList();
 
     } // - public static void main(String bong[]){
-
-    // @Override
-    // public void start(Stage primaryStage) {
-
-    //     ScrollPane scrollable = new ScrollPane();
-    //     GridPane grid = new GridPane();
-    //     grid.getColumnConstraints().add(new ColumnConstraints(100));
-    //     grid.getColumnConstraints().add(new ColumnConstraints(100));
-    //     grid.getColumnConstraints().add(new ColumnConstraints(100));
-    //     grid.setVgap(5);
-    //     grid.setHgap(5);
-
-    //     scrollable.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-    //     scrollable.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
-
-    //     scrollable.setContent(grid);
-    //     Scene scene = new Scene(scrollable, 1000, 600);
-    //     primaryStage.setTitle("Student Data"); 
-    //     primaryStage.setScene(scene);
-    //     primaryStage.show();
-
-    // } // - public void start(Stage primaryStage) {
 
 } // - public class LinkedList {}
 
