@@ -6,29 +6,21 @@ import java.lang.StringBuilder;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.stage.Stage;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.ColumnConstraints;
 
 public class LinkedList {
 
     public static int lineNumber=0;
-    private static final String FILE = "./classlist.txt";
+    private static final String FILE = "./classlist.txt"; // relative filepath, must be in the same folder
+    public static boolean exit = false; // global exit variable
 
-    public static class ListElement {
+    public static class ListElement { // an element of a linkedlist
 
-        String firstName;
+        String firstName; // data for each element
         String lastName;
         String identif;
         ListElement next;
 
-        public ListElement(String fName, String lName, String iD){
+        public ListElement(String fName, String lName, String iD){ // initialization for a new listelement
 
                 firstName = fName;
                 lastName = lName;
@@ -39,38 +31,39 @@ public class LinkedList {
 
     } // - public class ListElement {
 
-    public static class List {
+    public static class List { // essentially the list header
 
-        ListElement head;
+        ListElement head; // initialize empty head, is only used as a head later
 
         public List(){
 
         } // - public List(){}
 
-        public ListElement Find(String name){
+        public ListElement Find(String name){ // locates the first instance of a given last name
 
             ListElement current = head;
 
-            while(current != null){
+            while(current != null){ // checks if the current listelement's lastName matches the given string. if not, it moves on to the next until it reachest the end of the list.
 
-                if(current.lastName.equals(name)) {
+                if(current.lastName.toLowerCase().equals(name.toLowerCase())) { // returns the current listelement if it matches the user input, moves on if not
                     return current;
                 }
                 else 
                     current = current.next;
 
-            } // - while(current.next!=null){
+            } // - while(current.next!=null){}
 
+            System.out.println(name + " was not found"); // if the listelement was not found, returns nothing.
             return null;
 
-        } // - public ListElement Find(String name){
+        } // - public ListElement Find(String name){}
 
-        public void Insert(ListElement element){
+        public void Insert(ListElement element){ // misleading name; appends the element to the end of the current list
 
             boolean found = false;
             ListElement current = head.next;
 
-            while(!found){
+            while(!found){ // found is used differently - waits until the end of the list
 
                 if(current.next == null){
 
@@ -88,52 +81,15 @@ public class LinkedList {
 
         } // - public void Insert(ListElement element){}
 
-/*
-        public void RealInsert(ListElement element, int index){
-
-            ListElement current = head.next;
-            ListElement last = head;
-            int currentIndex = 0;
-            boolean withinBounds = true;
-
-            while(currentIndex != index && withinBounds){
-
-                try{
-
-                    current = current.next;
-                    last = last.next;
-                    currentIndex++;
-
-                } // - try{}
-                catch(NullPointerException e){
-
-                    System.out.println("Position not found");
-                    withinBounds = false;
-
-                } // - catch(NullPointerException e){}
-
-                if(currentIndex == index) {
-
-                    last.next = element;
-                    element.next = current;
-                    withinBounds = false;
-
-                } // - if(currentIndex == index) {}
-
-            } // - while(currentIndex != index && withinBounds){}
-
-        } // - public void RealInsert(ListElement element){}
-*/
-
-        public void Delete(String name){
+        public void Delete(String name){ // deletes an element based on user input
 
             boolean found = false;
             ListElement current = head.next;
             ListElement last = head;
 
-            while(current.lastName != null && !found){
+            while(current.lastName != null && !found){ // stops checking for the input if it reaches the end of the linkedlist or the input is matched
 
-                if(current.lastName.equals(name)){
+                if(current.lastName.toLowerCase().equals(name.toLowerCase())){ // if strings are equal, it changes the pointer on the last element to the node after the current
 
                     last.next=current.next;
                     found = true;
@@ -148,21 +104,58 @@ public class LinkedList {
 
             } // - while(current.next.lastName!=null){
 
+            if(!found) System.out.println(name + "was not found");
+
         } // - public void Delete(String name){}
 
-        public void PrintList(){
+        public void PrintList(){ // prints out a list of elements in descending order
 
             int lineNumber = 1;
-
+            int maxLastName = 0;
+            int maxFirstName = 0;
+            int minLastName = 1000;
+            int minFirstName = 1000;
+            System.out.println("\n\n\n\n");
             ListElement current = head.next;
 
-            while(current != null){
+            while(current != null){ // finds the maximum length of first and last names
 
-                System.out.println(lineNumber + ": " + current.firstName + " " + current.lastName + " - " + current.identif + "\n");
+                if(current.lastName.length()>maxLastName){
+
+                    maxLastName = current.lastName.length();
+
+                } // - if(current.lastName.length()>maxLastName){}
+
+                if(current.firstName.length()>maxFirstName){
+
+                    maxFirstName = current.firstName.length();
+
+                } // - if(current.firstName.length()>maxFirstName){}
+
+                current = current.next;
+
+            } // - while(current != null){}
+
+            current = head.next;
+
+            while(current != null){ // prints out data seperated using spaces depending on string length
+
+                System.out.print(lineNumber);
+                for(int i = Integer.toString(lineNumber).length(); i < 3; i++) 
+                    System.out.print(" ");
+                System.out.print("| " + current.lastName);
+                for(int i = maxLastName; i+1 > current.lastName.length(); i--) 
+                    System.out.print(" ");
+                System.out.print(current.firstName);
+                for(int i = maxLastName; i+2 > current.firstName.length(); i--) 
+                    System.out.print(" ");
+                System.out.print(current.identif + "\n");
                 current = current.next;
                 lineNumber++;
 
             } // - while(current!=null){}
+            
+            System.out.println();
 
         } // - public void PrintList(){}
 
@@ -170,13 +163,13 @@ public class LinkedList {
 
     public static void main(String bong[]){
 
-        List header = new List();
+        List header = new List(); // linkedlist init
         header.head = new ListElement("","","");
         ListElement c = header.head;
         BufferedReader br = null;
         FileReader fr = null;
 
-        try {
+        try { //reads the file, converts the raw data into elements, and appends the elements to a linkedlist
 
             br = new BufferedReader(new FileReader(FILE));
             fr = new FileReader(FILE);
@@ -222,49 +215,100 @@ public class LinkedList {
 
         }// - finally
 
-        ListElement ins = new ListElement("a","b","c");
-        header.Insert(ins);
-        System.out.println(header.Find("Wong").firstName);
-        header.Delete("Suri");
-//        Application.launch(bong);
         header.PrintList();
+
+        while(!exit) { // runs the code until the user decides to stop the program
+
+            String func = "";
+            String str = "";
+
+            
+            System.out.println("Function (Find (f), delete (d), add (a), print(p), exit program (exit)):");
+
+            while(!func.toLowerCase().equals("f")&&!func.toLowerCase().equals("find")&&!func.toLowerCase().equals("d")&&!func.toLowerCase().equals("delete")&&!func.toLowerCase().equals("a")&&!func.toLowerCase().equals("add")&&!func.toLowerCase().equals("p")&&!func.toLowerCase().equals("print")){
+            // get valid user input
+
+                func = getInput("Function");
+                if(exit) func = "f";
+
+            } // - while(!func.toLowerCase().equals("f")&&!func.toLowerCase().equals("find")&&!func.toLowerCase().equals("d")&&!func.toLowerCase().equals("delete")&&!func.toLowerCase().equals("a")&&!func.toLowerCase().equals("add")){}
+
+            if(exit) continue;
+
+            if(!func.toLowerCase().equals("p")&&!func.toLowerCase().equals("print")&&!func.toLowerCase().equals("a")&&!func.toLowerCase().equals("add")) str = getInput("Find Last Name");
+            if(exit) continue;
+
+            ListElement curr;
+
+            switch(func.toLowerCase()){ //executes code depending on the user input
+
+                case "find":    try{
+                                    System.out.println("Found: " + header.Find(str).lastName + "   " + header.Find(str).firstName + "   " + header.Find(str).identif);
+                                } // - try{}
+                                catch(NullPointerException e){
+                                } // - catch(NullPointerException e){)
+                break; // find case 1
+
+                case "f":   System.out.println("Found: " + header.Find(str).lastName + "   " + header.Find(str).firstName + "   " + header.Find(str).identif);
+                break; // find case 2
+
+                case "delete":  header.Delete(str);
+                break; // delete case 1
+
+                case "d":   header.Delete(str);
+                break; // delete case 2
+
+                case "add": curr = newList();
+                            header.Insert(curr);
+                break; // add case 1
+
+                case "a":   curr = newList();
+                            header.Insert(curr);
+                break; // add case 2
+
+                case "print":   header.PrintList();
+                break; // print case 1
+
+                case "p":   header.PrintList();
+                break; // print case 2
+
+            } // - switch(func.toLowerCase()){}
+
+        } // - while(!exit) {
 
     } // - public static void main(String bong[]){
 
+    public static String getInput(String msg){ // get an input with a prompt at the start
+
+        String q = "";
+
+        try{
+
+            System.out.print(msg + " > ");
+            Scanner input = new Scanner(System.in);
+            q = input.nextLine();
+            if(q.toLowerCase().equals("exit")) exit = true; // exits when the user inputs "exit"
+
+        } // - try {}
+        catch(Exception e){
+
+            System.out.println("Invalid input");
+
+        } // - catch(Exception e){}
+
+        return q;
+
+    } // - public String getInput(){}
+
+    public static ListElement newList(){ // gets data for a listelement used in List.Add
+
+        ListElement c = new ListElement("","","");
+        c.lastName = getInput("Last Name");
+        c.firstName = getInput("First Name");
+        c.identif = getInput("Student ID");
+
+        return c;
+
+    } // - public static ListElement newList(){
+
 } // - public class LinkedList {}
-
-
-
-
-/*
-
-had previous code that was deleted but accidentally took the filereader along with it
-couldn't be bothered rewriting it all out. this is the original.
-
-        BufferedReader br = null;
-        FileReader fr = null;
-        try {
-            //br = new BufferedReader(new FileReader(FILE));
-            fr = new FileReader(FILE);
-            br = new BufferedReader(fr);
-            String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null) {
-                lineNumber++;
-                System.out.println(sCurrentLine);
-                head.fName=sCurrentLine;
-                head.next=null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (br != null)
-                    br.close();
-                if (fr != null)
-                    fr.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-
-*/
