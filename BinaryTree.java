@@ -10,8 +10,9 @@ public class BinaryTree {
 
     public static int lineNumber=0;
     private static final String FILE = "./classlist.txt";
+    public static int pos = 0;
 
-    public class Node {
+    public static class Node {
 
         String lastName;
         String firstName;
@@ -31,7 +32,7 @@ public class BinaryTree {
 
     } // - public class Node {}
 
-    public class Root {
+    public static class Root {
 
         Node root;
 
@@ -142,29 +143,108 @@ public class BinaryTree {
 
         Collections.shuffle(Arrays.asList(binList));
         System.out.println(binList[0]);
+        System.out.println(binList[1]);
+
 
         Root r;
-        r.root = new Node(binList[0]), binList[0]), binList[0]));
+        r = new Root();
+        r.root = new Node(binList[0],binList[0],binList[0]);
+        int ind = 1;
+
+        while(ind < binList.length) {
+
+            Node tmpR = new Node(binList[ind],binList[ind],binList[ind]);
+            AddNode(ind, tmpR, r.root);
+            ind++;
+
+        }
+
+        PrintTree(r.root, binList.length);
 
     } // - public static void main(String args[]){}
 
-    private static void addNode(Node baseNode, Node addedNode, boolean rightLeft){
+    public static void AddNode(int index, Node addedNode, Node root){
 
-        boolean success = false;
+        Node curr = root;
+        String bin;
+        bin = toBinary(index);
+        int stringLength  = toBinary(index).length();
 
-        if(rightLeft) {
+        for(int p = 1; p < stringLength; p++){
 
-            baseNode.left = addedNode;
+            if(String.valueOf(bin.charAt(p)).equals("0")) {
+
+                if(curr.left==null){curr.left = new Node("","",""); System.out.print("yes ");}
+                curr = curr.left;
+                System.out.print(bin.charAt(p) + "left ");
+
+            }
+            else if(String.valueOf(bin.charAt(p)).equals("1")) {
+
+                if(curr.right==null){curr.right = new Node("","",""); System.out.print("yes ");}
+                curr = curr.right;
+                System.out.print(bin.charAt(p) + "right ");
+
+            };
 
         }
-        if(!rightleft && baseNode ) {
 
-            baseNode.right = addedNode;
+        System.out.println(addedNode.lastName);
 
-        }
-
-        if (success = false
+        curr = addedNode;
 
     }
+
+    // public static void PrintTree(Node root, int maxSize){
+
+    //     for(int tracker = 2; tracker <= maxSize; tracker++) {
+
+    //         int currentIndex = 2;
+    //         Node curr = root;
+
+    //         while(currentIndex <= tracker){
+
+    //             if(toBinary(currentIndex).equals(0)) {
+
+    //                 curr = curr.left;
+
+    //             }
+
+    //             else{
+
+    //                 curr = curr.right;
+
+    //             }
+
+    //             currentIndex++;
+
+    //         }
+
+    //         System.out.println(curr.lastName);
+
+    //     }
+
+    // }
+
+    public static String toBinary(int n) {
+
+       if (n == 0) {
+
+           return "0";
+
+       }
+       String binary = "";
+
+       while (n > 0) {
+
+           int rem = n % 2;
+           binary = rem + binary;
+           n = n / 2;
+
+       }
+
+       return binary;
+
+   }
 
 } // - public class BinaryTree {}
