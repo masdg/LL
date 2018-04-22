@@ -9,7 +9,7 @@ import java.io.IOException;
 public class BinaryTree {
 
     public static int lineNumber=0;
-    private static final String FILE = "./classlistshort";
+    private static final String FILE = "./classlist.txt";
     public static int pos = 0;
 
 
@@ -209,9 +209,88 @@ public class BinaryTree {
 
     // }
 
-    public static void TraverseAll(Node tmp, ListElement tmpL){
+    public static boolean BreadthFirst(Node tmp, ListElement tmpL, int orDepth, int depthCompare){
+        
+        int localDepth = depthCompare;
+        tmpL.lastName = tmp.lastName;
+        tmpL.firstName = tmp.lastName;
+        tmpL.id = tmp.lastName;
+        tmpL.next = new ListElement("","","");
+        boolean r = false;
+
+        if(tmp.left!=null) {
+
+            if(BreadthFirst(tmp.left, tmpL.next, orDepth, depthCompare + 1)) r = true;
+
+        }
+
+        if(tmp.right!=null) {
+
+            if(BreadthFirst(tmp.right, tmpL.next, orDepth, depthCompare + 1)) r = true;
+
+        } // - 
+
+        if(depthCompare == orDepth) {
+
+            System.out.print(tmp.index + " " + tmp.lastName + " | ");
+            r = true;
+
+        }
+
+        return r;
+
+    } // - public static void Postorder(Node tmp, ListElement tmpL){}
+
+    public static void Inorder(Node tmp, ListElement tmpL){
+
+        tmpL.lastName = tmp.lastName;
+        tmpL.firstName = tmp.lastName;
+        tmpL.id = tmp.lastName;
+        tmpL.next = new ListElement("","","");
 
         System.out.println(tmp.index + " " + tmp.lastName);
+
+        if(tmp.left!=null) {
+
+            Inorder(tmp.left, tmpL.next);
+
+        } // - if(tmp.left!=null) {}
+
+        if(tmp.right!=null) {
+
+            Inorder(tmp.right, tmpL.next);
+
+        } // - if(tmp.right!=null) {}
+
+    } // - public static void Inorder(Node tmp, ListElement tmpL){}
+
+    public static void StoreList(Node tmp) {
+
+        Head h = new Head();
+        h.head = new ListElement("","","");
+        int d = 1;
+        boolean isFalse = false;
+
+        while(!isFalse) {
+            
+            if(!BreadthFirst(tmp, h.head, d, 1))isFalse = true;
+            d++;
+            System.out.println();
+            System.out.println();
+
+        }
+
+        System.out.println();
+        Inorder(tmp, h.head);
+        System.out.println();
+        Preorder(tmp, h.head);
+        System.out.println();
+        Postorder(tmp,h.head);
+
+    }
+
+    public static void Preorder(Node tmp, ListElement tmpL){
+        
         tmpL.lastName = tmp.lastName;
         tmpL.firstName = tmp.lastName;
         tmpL.id = tmp.lastName;
@@ -219,25 +298,42 @@ public class BinaryTree {
 
         if(tmp.left!=null) {
 
-            TraverseAll(tmp.left, tmpL.next);
+            Preorder(tmp.left, tmpL.next);
+
+        } // - if(tmp.left!=null) {}
+
+        System.out.println(tmp.index + " " + tmp.lastName);
+
+        if(tmp.right!=null) {
+
+            Preorder(tmp.right, tmpL.next);
+
+        } // - if(tmp.right!=null) {}
+
+    } // - public static void Preorder(Node tmp, ListElement tmpL){}
+
+    public static void Postorder(Node tmp, ListElement tmpL){
+        
+        tmpL.lastName = tmp.lastName;
+        tmpL.firstName = tmp.lastName;
+        tmpL.id = tmp.lastName;
+        tmpL.next = new ListElement("","","");
+
+        if(tmp.left!=null) {
+
+            Postorder(tmp.left, tmpL.next);
 
         }
 
         if(tmp.right!=null) {
 
-            TraverseAll(tmp.right, tmpL.next);
+            Postorder(tmp.right, tmpL.next);
 
-        }
+        } // - 
 
-    }
+        System.out.println(tmp.index + " " + tmp.lastName);
 
-    public static void StoreList(Node tmp) {
-
-        Head h = new Head();
-        h.head = new ListElement("","","");
-        TraverseAll(tmp, h.head);
-
-    }
+    } // - public static void Postorder(Node tmp, ListElement tmpL){}
 
     public static String toBinary(int n) {
 
