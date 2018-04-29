@@ -1,3 +1,5 @@
+//tmp and curr in this program are usually used as temporary variables in this program
+
 import java.io.*;
 import java.util.*;
 import java.lang.Math.*;
@@ -16,6 +18,12 @@ public class BinaryTree {
 
 
     public static void main(String args[]){
+
+        ////////////////
+        // start      //
+        // filereader //
+        // stuff      //
+        ////////////////
 
         BufferedReader br = null;
         FileReader fr = null;
@@ -61,7 +69,7 @@ public class BinaryTree {
 
         } // - finally
 
-        String binList[] = new String[lineNumber];
+        String binList[] = new String[lineNumber]; // initialize array for data to be stored
         br = null;
         fr = null;
         String randArray[] = new String[lineNumber];
@@ -108,6 +116,12 @@ public class BinaryTree {
 
         } // - finally
 
+        ////////////////
+        // end        //
+        // filereader //
+        // stuff      //
+        ////////////////
+
         for (int i = 0; i < binList.length; i++) {
 
             binList[i] = randArray[i];
@@ -121,6 +135,8 @@ public class BinaryTree {
         String binListID[] = new String[lineNumber];
 
         for (int i = 0; i < binList.length; i++) {
+
+            //system.out.prinln(binList[i]) //for testing randomness
 
             String[] studentData = binList[i].split(" ");
             binListFirst[i] = studentData[3];
@@ -230,12 +246,12 @@ public class BinaryTree {
     public static int AddNode(Node addedNode, Node root){
 
         Node curr = root;
-        boolean d = false;
+        boolean d = false; // test if node has been added
         int depth = 1;
 
-        while(!d) {
+        while(!d) { // loops traversal while the addedNode has not been aded to the tree
 
-            if(addedNode.lastName.compareTo(curr.lastName)<0) {
+            if(addedNode.lastName.compareTo(curr.lastName)<0) { // if left is null and is given node lexicographically greater than the current, then left is set to the given node
 
                 if(curr.left==null) {
 
@@ -243,7 +259,7 @@ public class BinaryTree {
                     d = true;
 
                 } // - if(curr.left==null) {}
-                else{
+                else{ // otherwise continue traversal
 
                     curr=curr.left;
                     depth++;
@@ -253,13 +269,13 @@ public class BinaryTree {
             } // - if(addedNode.lastName.compareTo(curr.lastName)<0) {}
             else{
 
-                if(curr.right==null) {
+                if(curr.right==null) { // if right is null and is given node lexicographically greater than the current, then right is set to the given node
 
                     curr.right = addedNode;
                     d = true;
 
                 }// - 
-                else{
+                else{ //otherwise continue traversal
 
                     curr=curr.right;
                     depth++;
@@ -277,20 +293,20 @@ public class BinaryTree {
 
     public static boolean BreadthFirst(Node tmp, ListElement tmpL, int orDepth, int depthCompare){
         
-        int localDepth = depthCompare;
+        int localDepth = depthCompare; // local depth variable used for comparisons
         tmpL.lastName = tmp.lastName;
         tmpL.firstName = tmp.firstName;
         tmpL.id = tmp.id;
         tmpL.next = new ListElement("","","");
         boolean r = false;
 
-        if(tmp.left!=null) {
+        if(tmp.left!=null) { // go left if not null
 
             if(BreadthFirst(tmp.left, tmpL.next, orDepth, depthCompare + 1)) r = true;
 
         } // - if(tmp.left!=null) {}
 
-        if(tmp.right!=null) {
+        if(tmp.right!=null) { // go right if left is checked/null
 
             if(BreadthFirst(tmp.right, tmpL.next, orDepth, depthCompare + 1)) r = true;
 
@@ -298,7 +314,7 @@ public class BinaryTree {
 
         if(depthCompare == orDepth) {
 
-            System.out.print(tmp.index + " " + tmp.lastName + " | ");
+            System.out.print(tmp.index + " " + tmp.lastName + " | "); // at end of recursion, print out if the current depth matches the given depth
             r = true;
 
         } // - if(depthCompare == orDepth) {
@@ -307,7 +323,7 @@ public class BinaryTree {
 
     } // - public static void Postorder(Node tmp, ListElement tmpL){}
 
-    public static void Inorder(Node tmp, ListElement tmpL){
+    public static void Inorder(Node tmp, ListElement tmpL){ // inorder traversal: left-root-right
 
         tmpL.lastName = tmp.lastName;
         tmpL.firstName = tmp.firstName;
@@ -316,7 +332,7 @@ public class BinaryTree {
 
         System.out.println(tmp.index + " " + tmp.id + " " + tmp.lastName + " " + tmp.firstName);
 
-        if(tmp.left!=null) {
+        if(tmp.left!=null) { // go left if not null
 
             Inorder(tmp.left, tmpL.next);
 
@@ -330,14 +346,14 @@ public class BinaryTree {
 
     } // - public static void Inorder(Node tmp, ListElement tmpL){}
 
-    public static void Preorder(Node tmp, ListElement tmpL){
+    public static void Preorder(Node tmp, ListElement tmpL){ // preorder traversal: root-left-right
         
         tmpL.lastName = tmp.lastName;
         tmpL.firstName = tmp.firstName;
         tmpL.id = tmp.id;
         tmpL.next = new ListElement("","","");
 
-        if(tmp.left!=null) {
+        if(tmp.left!=null) { // go left if not null
 
             Preorder(tmp.left, tmpL.next);
 
@@ -345,7 +361,7 @@ public class BinaryTree {
 
         System.out.println(tmp.index + " " + tmp.id + " " + tmp.lastName + " " + tmp.firstName);
 
-        if(tmp.right!=null) {
+        if(tmp.right!=null) { // go right if left is checked/left is null
 
             Preorder(tmp.right, tmpL.next);
 
@@ -353,37 +369,37 @@ public class BinaryTree {
 
     } // - public static void Preorder(Node tmp, ListElement tmpL){}
 
-    public static void Postorder(Node tmp, ListElement tmpL){
+    public static void Postorder(Node tmp, ListElement tmpL){ // postorder traversal: left-right-root
         
         tmpL.lastName = tmp.lastName;
         tmpL.firstName = tmp.firstName;
         tmpL.id = tmp.id;
         tmpL.next = new ListElement("","","");
 
-        if(tmp.left!=null) {
+        if(tmp.left!=null) { // go left if not null
 
             Postorder(tmp.left, tmpL.next);
 
         } // - if(tmp.left!=null) {}
 
-        if(tmp.right!=null) {
+        if(tmp.right!=null) { // go right if left is checked/left is null
 
             Postorder(tmp.right, tmpL.next);
 
         } // - if(tmp.right!=null) {}
 
-        System.out.println(tmp.index + " " + tmp.id + " " + tmp.lastName + " " + tmp.firstName);
+        System.out.println(tmp.index + " " + tmp.id + " " + tmp.lastName + " " + tmp.firstName); // print out after both traversals are completed
 
     } // - public static void Postorder(Node tmp, ListElement tmpL){}
 
-    public static void BreadthTree(Node tmp) {
+    public static void BreadthTree(Node tmp) { // executes breadthfirst traversal
 
         Head h = new Head();
         h.head = new ListElement("","","");
         int d = 1;
         boolean isFalse = false;
 
-        while(!isFalse) {
+        while(!isFalse) { // prints out by depth
             
             if(!BreadthFirst(tmp, h.head, d, 1))isFalse = true;
             d++;
@@ -394,7 +410,7 @@ public class BinaryTree {
 
     } // - public static void BreadthTree(Node tmp) {}
 
-    public static void PostTree(Node tmp) {
+    public static void PostTree(Node tmp) { // executes postorder traversal
 
         Head h = new Head();
         h.head = new ListElement("","","");
@@ -403,7 +419,7 @@ public class BinaryTree {
 
     } // - public static void PostTree(Node tmp) {}
 
-    public static void InTree(Node tmp) {
+    public static void InTree(Node tmp) { // executes inorder traversal
 
         Head h = new Head();
         h.head = new ListElement("","","");
@@ -412,7 +428,7 @@ public class BinaryTree {
 
     } // - public static void InTree(Node tmp) {}
 
-    public static void PreTree(Node tmp) {
+    public static void PreTree(Node tmp) { // executes preorder traversal
 
         Head h = new Head();
         h.head = new ListElement("","","");
@@ -421,23 +437,23 @@ public class BinaryTree {
 
     } // - public static void PreTree(Node tmp) {}
 
-    public static void Locate(String find, Node root) {
+    public static void Locate(String find, Node root) { // find function to find a node based on a given lastname
 
         Node tmp = root;
 
-        if(tmp.left!=null) {
+        if(tmp.left!=null) { // go left
 
             Locate(find, tmp.left);
 
         } // - if(tmp.left!=null) {}
 
-        if(tmp.right!=null) {
+        if(tmp.right!=null) { // go right if left has already been checked/is null
 
             Locate(find, tmp.right);
 
         } // - if(tmp.right!=null) {}
 
-        if (find.toLowerCase().equals(tmp.lastName.toLowerCase())) {
+        if (find.toLowerCase().equals(tmp.lastName.toLowerCase())) { // if found, outputs the node
         
             System.out.println("Found: " + tmp.lastName + " " + tmp.firstName + " " + tmp.id);
             found = true;
